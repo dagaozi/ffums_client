@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-06 20:11:06
- * @LastEditTime: 2020-05-06 22:55:13
+ * @LastEditTime: 2020-05-07 20:36:11
  * @LastEditors: lxc
  -->
 <template>
@@ -56,7 +56,7 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'Patient',
+  name: 'PatientInfo',
   computed: {
     ...mapGetters(['name'])
   },
@@ -90,7 +90,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" >
 .dashboard {
   &-container {
     margin: 30px;

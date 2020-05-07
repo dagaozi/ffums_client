@@ -42,24 +42,35 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/patient',
-    children: [{
-      path: 'patient',
-      name: 'Patient',
-      component: () => import('@/views/patient/index'),
-      meta: { title: '患者信息', icon: 'people' }
-    }]
+    redirect: '/list',
+    meta: { title: '患者', icon: 'people' },
+    children: [
+      {
+        path: 'list',
+        name: 'PatientList',
+        component: () => import('@/views/patientlist/index'),
+        meta: { title: '患者列表', icon: 'people' }
+      },
+      {
+        path: 'info',
+        name: 'PatientInfo',
+        component: () => import('@/views/patient/index'),
+        meta: { title: '患者信息', icon: 'people' }
+      }
+    ]
   },
   {
     path: '/followup',
     component: Layout,
     redirect: '/followup',
-    children: [{
-      path: 'followup',
-      name: 'Followup',
-      component: () => import('@/views/followup/index'),
-      meta: { title: '随访管理', icon: 'example' }
-    }]
+    children: [
+      {
+        path: 'followup',
+        name: 'Followup',
+        component: () => import('@/views/followup/index'),
+        meta: { title: '随访管理', icon: 'example' }
+      }
+    ]
   },
 
   {
@@ -148,11 +159,12 @@ export const constantRoutes = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 
-const createRouter = () => new Router({
-  // mode: 'history', // require service support
-  scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
-})
+const createRouter = () =>
+  new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
+    routes: constantRoutes
+  })
 
 const router = createRouter()
 export function resetRouter() {
