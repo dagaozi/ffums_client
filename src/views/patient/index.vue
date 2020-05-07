@@ -9,85 +9,89 @@
   <div class="dashboard-container">
     <el-form ref="form" :model="form" label-width="120px">
       <el-form-item label="姓名：" class="from-item">
-        <el-input v-model="form.name" />
+        <el-input v-model="form.name"/>
       </el-form-item>
       <el-form-item label="年龄：" class="from-item">
-        <el-input v-model="form.age" />
+        <el-input v-model="form.age"/>
       </el-form-item>
       <el-form-item label="性别：" class="from-item">
         <el-select v-model="form.sex" placeholder="请选择性别">
-          <el-option label="男" value="男" />
-          <el-option label="女" value="女" />
+          <el-option label="男" value="男"/>
+          <el-option label="女" value="女"/>
         </el-select>
       </el-form-item>
       <el-form-item label="病人归属：" class="from-item">
         <el-select v-model="form.brgs" placeholder="请选择归属">
-          <el-option label="内科" value="内科" />
-          <el-option label="外科" value="外科" />
+          <el-option label="内科" value="内科"/>
+          <el-option label="外科" value="外科"/>
         </el-select>
       </el-form-item>
       <el-form-item label="身份证：" class="from-item">
-        <el-input v-model="form.idcard" />
+        <el-input v-model="form.idcard"/>
       </el-form-item>
       <el-form-item label="住院号：" class="from-item">
-        <el-input v-model="form.zyId" />
+        <el-input v-model="form.zyId"/>
       </el-form-item>
       <el-form-item label="门诊号：" class="from-item">
-        <el-input v-model="form.mzId" />
+        <el-input v-model="form.mzId"/>
       </el-form-item>
       <el-form-item label="电话1：" class="from-item">
-        <el-input v-model="form.tel1" />
+        <el-input v-model="form.tel1"/>
       </el-form-item>
       <el-form-item label="电话2：" class="from-item">
-        <el-input v-model="form.tel2" />
+        <el-input v-model="form.tel2"/>
       </el-form-item>
       <el-form-item label="地址：">
-        <el-input v-model="form.address" type="textarea" />
+        <el-input v-model="form.address" type="textarea"/>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">创建</el-button>
-        <el-button @click="onCancel">取消</el-button>
+        <el-button v-show="!changeInfo" type="primary" @click="onSubmit">修改患者信息</el-button>
+        <div v-show="changeInfo">
+          <el-button type="primary" @click="saveInfo">保存</el-button>
+          <el-button @click="onCancel">取消</el-button>
+        </div>
       </el-form-item>
     </el-form>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters } from "vuex";
 
 export default {
-  name: 'PatientInfo',
+  name: "PatientInfo",
   computed: {
-    ...mapGetters(['name'])
+    ...mapGetters(["name"])
   },
   data() {
     return {
       form: {
-        name: '',
-        address: '',
-        age: '',
-        sex: '',
-        brgs: '',
-        idcard: '',
-        zyId: '',
-        mzId: '',
-        tel1: '',
-        tel2: ''
-      }
-    }
+        name: "",
+        address: "",
+        age: "",
+        sex: "",
+        brgs: "",
+        idcard: "",
+        zyId: "",
+        mzId: "",
+        tel1: "",
+        tel2: ""
+      },
+      changeInfo: false
+    };
   },
   methods: {
     onSubmit() {
-      this.$message('submit!')
+      this.changeInfo = true;
     },
     onCancel() {
-      this.$message({
-        message: 'cancel!',
-        type: 'warning'
-      })
+      this.changeInfo = false;
+    },
+    saveInfo() {
+      this.$message("保存用户信息")
     }
   }
-}
+};
 </script>
 
 <style lang="scss" >

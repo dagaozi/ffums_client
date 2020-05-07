@@ -11,14 +11,14 @@ const state = {
 }
 
 const mutations = {
-  SET_INFO: (state, info) => {
+  setInfo: (state, info) => {
     state.info = info
   }
 }
 
 const actions = {
   setInfo({ commit }, info) {
-    commit('SET_INFO', info)
+    commit('setInfo', info)
   }
 }
 

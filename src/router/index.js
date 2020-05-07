@@ -17,28 +17,6 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-
-  // {
-  //   path: '/',
-  //   component: Layout,
-  //   redirect: '/dashboard',
-  //   children: [{
-  //     path: 'dashboard',
-  //     name: 'Dashboard',
-  //     component: () => import('@/views/dashboard/index'),
-  //     meta: { title: 'Dashboard', icon: 'dashboard' }
-  //   }]
-  // },
-  // {
-  //   path: '/home',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'https://baidu.com',
-  //       meta: { title: '患者列表', icon: 'peoples' }
-  //     }
-  //   ]
-  // },
   {
     path: '/',
     component: Layout,
@@ -62,14 +40,21 @@ export const constantRoutes = [
   {
     path: '/followup',
     component: Layout,
-    redirect: '/followup',
+    redirect: '/followup/new',
+    meta: { title: '随访', icon: 'example' },
     children: [
       {
-        path: 'followup',
+        path: 'new',
+        name: 'NewFollowUp',
+        component: () => import('@/views/newfollowup/index'),
+        meta: { title: '新增随访', icon: 'example' }
+      },
+      {
+        path: 'hisory',
         name: 'Followup',
         component: () => import('@/views/followup/index'),
-        meta: { title: '随访管理', icon: 'example' }
-      }
+        meta: { title: '随访记录', icon: 'example' }
+      },
     ]
   },
 
