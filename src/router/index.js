@@ -47,7 +47,7 @@ export const constantRoutes = [
       path: 'patient',
       name: 'Patient',
       component: () => import('@/views/patient/index'),
-      meta: { title: '患者', icon: 'people' }
+      meta: { title: '患者信息', icon: 'people' }
     }]
   },
   {
