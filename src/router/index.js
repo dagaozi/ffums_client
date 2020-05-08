@@ -54,7 +54,7 @@ export const constantRoutes = [
         name: 'Followup',
         component: () => import('@/views/followup/index'),
         meta: { title: '随访记录', icon: 'example' }
-      },
+      }
     ]
   },
 
