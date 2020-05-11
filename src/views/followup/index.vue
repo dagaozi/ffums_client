@@ -12,7 +12,6 @@
       :data="tableData"
       highlight-current-row
       style="width: 100%"
-      @current-change="handleCurrentChange"
     >
       <el-table-column property="sfmc" label="随访名称" />
       <el-table-column property="sfsj" label="随访时间" />
