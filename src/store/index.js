@@ -12,6 +12,7 @@ import app from './modules/app'
 import settings from './modules/settings'
 import user from './modules/user'
 import patient from './modules/patient'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
@@ -22,7 +23,8 @@ const store = new Vuex.Store({
     user,
     patient
   },
-  getters
+  getters,
+  plugins: [createPersistedState()]
 })
 
 export default store

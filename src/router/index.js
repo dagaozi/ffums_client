@@ -72,21 +72,21 @@ export const constantRoutes = [
         meta: { title: '实验室指标', icon: 'table' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
+        path: 'tj',
+        name: 'tj',
+        component: () => import('@/views/tj/index'),
         meta: { title: '特检指标', icon: 'tree' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
+        path: 'rt',
+        name: 'rt',
+        component: () => import('@/views/rt/index'),
         meta: { title: '人体成分', icon: 'tree' }
       },
       {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
+        path: 'qt',
+        name: 'qt',
+        component: () => import('@/views/qt/index'),
         meta: { title: '其他信息', icon: 'tree' }
       }
     ]
