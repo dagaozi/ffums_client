@@ -1,5 +1,11 @@
+/*
+ * @Description:
+ * @Author: lxc
+ * @Date: 2020-05-06 20:11:06
+ * @LastEditTime: 2020-05-18 09:43:53
+ * @LastEditors: lxc
+ */
 import request from '@/utils/request'
-
 
 export function getInfo(token) {
   return request({
@@ -16,10 +22,8 @@ export function logout() {
   })
 }
 
-
-
 /**
- * 
+ *
  * @param {*} type 登录类型：（填写101）
  * @param {*} account 用户名
  * @param {*} password 密码
@@ -28,14 +32,14 @@ export function login(type, account, password) {
   return request({
     url: '/user/login',
     method: 'post',
-    params: { type, account, password }
+    data: { type, account, password }
   })
 }
 
 /**
  * 验证token是否有效
 
- * @param {*} token 
+ * @param {*} token
  */
 export function verifyToken(token) {
   return request({
@@ -44,7 +48,6 @@ export function verifyToken(token) {
     params: { token }
   })
 }
-
 
 /**
  * 新增用户
@@ -59,5 +62,4 @@ export function register(account, password, grade) {
     params: { account, password, grade }
   })
 }
-
 
