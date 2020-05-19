@@ -1,36 +1,82 @@
+<!--
+ * @Description:
+ * @Author: lxc
+ * @Date: 2020-05-19 23:21:51
+ * @LastEditTime: 2020-05-19 23:22:23
+ * @LastEditors: lxc
+-->
 <template>
   <div class="dashboard-container">
-    <el-button type="primary" class="btn" @click="dialogFormVisible = true">新增目录</el-button>
+    <el-button type="primary" class="btn" @click="dialogFormVisible = true">新增指标</el-button>
 
-    <el-dialog title="新增目录" :visible.sync="dialogFormVisible">
+    <el-dialog title="新增指标" :visible.sync="dialogFormVisible">
       <el-form ref="form" :model="form">
         <el-form-item
-          label="目录名称"
+          label="指标名称"
           :label-width="formLabelWidth"
           class="singleinput"
-          prop="name"
         >
-          <el-input v-model="form.name" autocomplete="off" />
+          <el-input v-model="form.zbmc" autocomplete="off" />
         </el-form-item>
 
-        <el-form-item label="上级指标" :label-width="formLabelWidth" prop="categoryId">
-          <el-select v-model="form.categoryId" placeholder="请选择上级指标">
-            <el-option label="实验室指标" value="1" />
+        <el-form-item label="上级指标" :label-width="formLabelWidth">
+          <el-select v-model="form.sjzb" placeholder="请选择上级指标">
+            <el-option label="实验室指标" value="实验室指标" />
 
-            <el-option label="特检指标" value="2" />
+            <el-option label="特检指标" value="特检指标" />
 
-            <el-option label="人体成分" value="3" />
+            <el-option label="人体成分" value="人体成分" />
 
-            <el-option label="其他信息" value="4" />
+            <el-option label="其他信息" value="其他信息" />
           </el-select>
+        </el-form-item>
+
+        <el-form-item label="指标类型" :label-width="formLabelWidth">
+          <el-select v-model="form.zblx" placeholder="请选择指标类型">
+            <el-option label="输入框" value="输入框" />
+
+            <el-option label="单选" value="单选" />
+          </el-select>
+        </el-form-item>
+
+        <el-form-item
+          v-for="(domain, index) in form.singleArray"
+          v-show="isSingleItemShow"
+          :key="domain.key"
+          :label="index + 1 + '.单选名称'"
+          :prop="'domains.' + index + '.value'"
+          :rules="{
+            required: true,
+
+            message: '单选名称不能为空',
+
+            trigger: 'blur'
+          }"
+          :label-width="formLabelWidth"
+        >
+          <el-input
+            v-model="domain.value"
+            class="singleinput"
+            maxlength="20"
+            show-word-limit
+            placeholder="请输入单选名称"
+          />
+
+          <el-button @click.prevent="removesingle(domain)">删除</el-button>
         </el-form-item>
       </el-form>
 
       <div slot="footer" class="dialog-footer">
         <el-button
           type="primary"
-          @click="handleOk"
+          @click="dialogFormVisible = false"
         >确 定</el-button>
+
+        <el-button
+          v-show="isSingleItemShow"
+          @click="addsingle"
+        >新增单选</el-button>
+
         <el-button @click="handledialogcancel">取 消</el-button>
       </div>
     </el-dialog>
@@ -51,7 +97,13 @@
       highlight-current-row
       style="width: 100%"
     >
-      <el-table-column property="zbmc" label="目录名称" />
+      <el-table-column property="zbmc" label="指标名称" />
+
+      <el-table-column property="sjzb" label="上级指标" />
+
+      <el-table-column property="zblx" label="指标类型" />
+
+      <el-table-column property="zysx" label="注意事项" />
 
       <el-table-column label="操作">
         <template slot-scope="scope">
@@ -90,10 +142,8 @@
 </template>
 
 <script>
-
-import { addItemCategoryConfig } from '@/api/categoryconfig.js'
 export default {
-  name: 'Menu1',
+  name: 'Menu3',
   data() {
     return {
       activeName: 'first',
@@ -131,7 +181,9 @@ export default {
       dialogFormVisible: false,
       form: {
         name: '',
-        categoryId: ''
+        sjzb: '',
+        zblx: '',
+        singleArray: []
       },
       formLabelWidth: '120px'
     }
@@ -181,18 +233,6 @@ export default {
     },
     handleClick(tab, event) {
       console.log(tab, event)
-    },
-    handleOk() {
-      addItemCategoryConfig(this.form).then(this._addItemCategoryConfig)
-    },
-    _addItemCategoryConfig(res) {
-      if (res.data) {
-        this.$refs.form.resetFields()
-          this.$message({
-          message: res.data,
-          type: 'success'
-        })
-      }
     }
   }
 }
