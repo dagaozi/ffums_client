@@ -1,3 +1,10 @@
+/*
+ * @Description:
+ * @Author: lxc
+ * @Date: 2020-05-06 20:11:06
+ * @LastEditTime: 2020-05-19 07:57:09
+ * @LastEditors: lxc
+ */
 import Vue from 'vue'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
@@ -24,13 +31,14 @@ import '@/permission' // permission control
  * please remove it before going online! ! !
  */
 import { mockXHR } from '../mock'
+import _ from 'lodash'
 if (process.env.NODE_ENV === 'production') {
   mockXHR()
 }
 
 // set ElementUI lang to EN
 Vue.use(ElementUI, { locale })
-
+Vue.prototype._ = _
 Vue.config.productionTip = false
 
 new Vue({

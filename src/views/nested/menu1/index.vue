@@ -3,42 +3,42 @@
     <el-button type="primary" @click="dialogFormVisible = true">新增指标</el-button>
 
     <el-dialog title="新增指标" :visible.sync="dialogFormVisible">
-      <el-form :model="form" ref="form">
+      <el-form ref="form" :model="form">
         <el-form-item label="指标名称" :label-width="formLabelWidth" class="singleinput">
-          <el-input v-model="form.zbmc" autocomplete="off"></el-input>
+          <el-input v-model="form.zbmc" autocomplete="off" />
         </el-form-item>
         <el-form-item label="上级指标" :label-width="formLabelWidth">
           <el-select v-model="form.sjzb" placeholder="请选择上级指标">
-            <el-option label="实验室指标" value="实验室指标"></el-option>
-            <el-option label="特检指标" value="特检指标"></el-option>
-            <el-option label="人体成分" value="人体成分"></el-option>
-            <el-option label="其他信息" value="其他信息"></el-option>
+            <el-option label="实验室指标" value="实验室指标" />
+            <el-option label="特检指标" value="特检指标" />
+            <el-option label="人体成分" value="人体成分" />
+            <el-option label="其他信息" value="其他信息" />
           </el-select>
         </el-form-item>
 
         <el-form-item label="指标类型" :label-width="formLabelWidth">
           <el-select v-model="form.zblx" placeholder="请选择指标类型">
-            <el-option label="输入框" value="输入框"></el-option>
-            <el-option label="单选" value="单选"></el-option>
+            <el-option label="输入框" value="输入框" />
+            <el-option label="单选" value="单选" />
           </el-select>
         </el-form-item>
 
         <el-form-item
-          v-show="isSingleItemShow"
           v-for="(domain, index) in form.singleArray"
-          :label="(index+1)+'.单选名称'"
+          v-show="isSingleItemShow"
           :key="domain.key"
+          :label="(index+1)+'.单选名称'"
           :prop="'domains.' + index + '.value'"
           :rules="{required: true, message: '单选名称不能为空', trigger: 'blur'}"
           :label-width="formLabelWidth"
         >
           <el-input
-            class="singleinput"
             v-model="domain.value"
+            class="singleinput"
             maxlength="20"
             show-word-limit
             placeholder="请输入单选名称"
-          ></el-input>
+          />
           <el-button @click.prevent="removesingle(domain)">删除</el-button>
         </el-form-item>
       </el-form>
@@ -81,95 +81,95 @@
 
 <script>
 export default {
-  name: "Menu1",
+  name: 'Menu1',
   data() {
     return {
       tableData: [
         {
-          zbmc: "测试1",
-          sjzb: "实验室指标",
-          zblx: "单选",
-          zysx: "注意事项",
+          zbmc: '测试1',
+          sjzb: '实验室指标',
+          zblx: '单选',
+          zysx: '注意事项',
           edit: false
         },
         {
-          zbmc: "测试2",
-          sjzb: "特检指标",
-          zblx: "单选",
-          zysx: "注意事项",
+          zbmc: '测试2',
+          sjzb: '特检指标',
+          zblx: '单选',
+          zysx: '注意事项',
           edit: false
         },
         {
-          zbmc: "测试3",
-          sjzb: "人体成分",
-          zblx: "单选",
-          zysx: "注意事项",
+          zbmc: '测试3',
+          sjzb: '人体成分',
+          zblx: '单选',
+          zysx: '注意事项',
           edit: false
         },
         {
-          zbmc: "测试4",
-          sjzb: "其他信息",
-          zblx: "单选",
-          zysx: "注意事项",
+          zbmc: '测试4',
+          sjzb: '其他信息',
+          zblx: '单选',
+          zysx: '注意事项',
           edit: false
         }
       ],
       currentRow: null,
       dialogFormVisible: false,
       form: {
-        name: "",
-        sjzb: "",
-        zblx: "",
+        name: '',
+        sjzb: '',
+        zblx: '',
         singleArray: []
       },
-      formLabelWidth: "120px"
-    };
+      formLabelWidth: '120px'
+    }
   },
   computed: {
     isSingleItemShow() {
-      return this.form.zblx == "单选";
+      return this.form.zblx === '单选'
     }
   },
   methods: {
     handleEdit(index, row) {
-      console.log(index, row);
-      this.$message("编辑");
+      console.log(index, row)
+      this.$message('编辑')
       // row.edit = true;
     },
     handleDelete(index, row) {
-      console.log(index, row);
-      this.$message("删除");
+      console.log(index, row)
+      this.$message('删除')
     },
     newZb() {
-      this.$message("新增指标");
+      this.$message('新增指标')
     },
     addsingle() {
       this.form.singleArray.push({
-        value: "",
+        value: '',
         key: Date.now()
-      });
+      })
     },
     removesingle(item) {
-      var index = this.form.singleArray.indexOf(item);
-      console.log("removesingle index ->", index);
+      var index = this.form.singleArray.indexOf(item)
+      console.log('removesingle index ->', index)
       if (index !== -1) {
-        this.form.singleArray.splice(index, 1);
+        this.form.singleArray.splice(index, 1)
       }
     },
     resetForm() {
       this.form = {
-        name: "",
-        sjzb: "",
-        zblx: "",
+        name: '',
+        sjzb: '',
+        zblx: '',
         singleArray: []
-      };
+      }
     },
     handledialogcancel() {
-      this.resetForm();
-      this.dialogFormVisible = false;
+      this.resetForm()
+      this.dialogFormVisible = false
     }
   }
-};
+}
 </script>
 
 <style lang="stylus" scoped>
