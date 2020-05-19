@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-06 20:11:06
- * @LastEditTime: 2020-05-18 09:43:53
+ * @LastEditTime: 2020-05-19 20:37:36
  * @LastEditors: lxc
  */
 import request from '@/utils/request'
@@ -55,11 +55,11 @@ export function verifyToken(token) {
  * @param {*} password 密码
  * @param {*} grade 等级（USER=3 SUER=6 ADMIN=9）
  */
-export function register(account, password, grade) {
+export function register(data) {
   return request({
     url: '/user/register',
     method: 'post',
-    params: { account, password, grade }
+    data
   })
 }
 
