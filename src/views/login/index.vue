@@ -138,9 +138,21 @@ export default {
       //     return false
       //   }
       // })
+      this.loading = true
       login(101, this.loginForm.username, this.loginForm.password).then(
         this._login
       )
+
+    /*   this.$store.commit("user/SET_TOKEN", "test");
+      this.$store.commit("user/SET_NAME", "lxc");
+      this.$store.commit(
+        "user/SET_AVATAR",
+        "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+      );
+      setToken("test");
+      const msg = this.redirect || "/";
+      console.log("_login msg-> ", msg);
+      this.$router.push({ path: msg }); */
     },
     _login(res) {
       console.log(res)
@@ -148,7 +160,10 @@ export default {
       if (res.data) {
         this.$store.commit('user/SET_TOKEN', res.data)
         this.$store.commit('user/SET_NAME', 'lxc')
-        this.$store.commit('user/SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
+        this.$store.commit(
+          'user/SET_AVATAR',
+          'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+        )
         setToken(res.data)
         const msg = this.redirect || '/'
         console.log('_login msg-> ', msg)

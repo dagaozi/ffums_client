@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-18 08:47:24
- * @LastEditTime: 2020-05-19 23:31:52
+ * @LastEditTime: 2020-05-26 09:55:35
  * @LastEditors: lxc
  */
 import request from '@/utils/request'
@@ -21,11 +21,11 @@ export function addItemCategoryConfig(data) {
   })
 }
 
-export function updateItemCategoryConfig(name, categoryId) {
+export function updateItemCategoryConfig(data) {
   return request({
     url: '/itemCategoryconfig/update',
-    method: 'get',
-    params: { name, categoryId }
+    method: 'post',
+    data
   })
 }
 
@@ -48,6 +48,22 @@ export function getItemCategoryConfigById(id) {
   return request({
     url: '/itemCategoryconfig/getbyId',
     method: 'get',
-    params: { id }
+    params: { id: id }
+  })
+}
+
+export function getItemCategoryConfigByName(categoryName) {
+  return request({
+    url: '/itemCategoryconfig/getByCategoryName',
+    method: 'get',
+    params: { categoryName: categoryName }
+  })
+}
+
+export function deleteCategory(followId) {
+  return request({
+    url: '/delete',
+    method: 'post',
+    data: { followId: followId }
   })
 }

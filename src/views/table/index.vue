@@ -1,3 +1,10 @@
+<!--
+ * @Description:
+ * @Author: lxc
+ * @Date: 2020-05-06 20:11:06
+ * @LastEditTime: 2020-05-26 10:11:40
+ * @LastEditors: lxc
+-->
 <template>
   <div class="app-container">
     <el-table
@@ -8,9 +15,9 @@
       fit
       highlight-current-row
     >
-      <el-table-column label="指标名称">
+      <el-table-column label="目录名称">
         <template slot-scope="scope">
-          {{ scope.row.title }}
+          {{ scope.row.name }}
         </template>
       </el-table-column>
     </el-table>
@@ -18,34 +25,31 @@
 </template>
 
 <script>
-import { getList } from '@/api/table'
+// import { getAllConfig } from '@/api/itemconfig'
+import { getItemCategoryConfigByName } from '@/api/categoryconfig'
 
 export default {
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
   data() {
     return {
       list: null,
-      listLoading: true
+      listLoading: false
     }
   },
   created() {
+    this.getCategoryList()
     this.fetchData()
   },
   methods: {
     fetchData() {
-      this.listLoading = true
-      getList().then(response => {
-        this.list = response.data.items
-        this.listLoading = false
+      // this.listLoading = true
+      // getAllConfig().then(res => {
+      //   this.listLoading = false
+      //   this.list = res.data
+      // })
+    },
+    getCategoryList() {
+      getItemCategoryConfigByName('实验室指标').then(res => {
+        this.list = res.data
       })
     }
   }

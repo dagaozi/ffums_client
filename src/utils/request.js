@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-06 20:11:06
- * @LastEditTime: 2020-05-18 09:51:23
+ * @LastEditTime: 2020-05-22 15:00:01
  * @LastEditors: lxc
  */
 import axios from 'axios'
@@ -43,7 +43,7 @@ service.interceptors.response.use(
   /**
    * If you want to get http information such as headers or status
    * Please return  response => response
-  */
+   */
 
   /**
    * Determine the request status by custom code
@@ -52,7 +52,7 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-
+    console.log('response res->', res)
     // if the custom code is not 20000, it is judged as an error.
     if (res.hasError !== 0) {
       Message({
@@ -64,11 +64,15 @@ service.interceptors.response.use(
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
         // to re-login
-        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        }).then(() => {
+        MessageBox.confirm(
+          'You have been logged out, you can cancel to stay on this page, or log in again',
+          'Confirm logout',
+          {
+            confirmButtonText: 'Re-Login',
+            cancelButtonText: 'Cancel',
+            type: 'warning'
+          }
+        ).then(() => {
           store.dispatch('user/resetToken').then(() => {
             location.reload()
           })
@@ -80,9 +84,17 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.log('err' + error) // for debug
+    console.log('err' + error)
+    // for debug
+    let msg = error.message
+    if (
+      error.code === 'ECONNABORTED' &&
+      error.message.indexOf('timeout') !== -1
+    ) {
+      msg = '网络请求超时'
+    }
     Message({
-      message: error.message,
+      message: msg,
       type: 'error',
       duration: 5 * 1000
     })
