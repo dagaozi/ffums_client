@@ -239,12 +239,12 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row)
-      deleteCategory(row.categoryId).then(res => {
-        // if (res.data) {
-        // } else {
-        // }
+      deleteCategory(row.id).then(res => {
+        if (res.data) {
+          this.getData()
+        }
       })
-      this.$message('删除')
+     // this.$message('删除')
     },
     newZb() {
       this.$message('新增指标')
@@ -314,6 +314,7 @@ export default {
           message: res.data,
           type: 'success'
         })
+        this.getData()
       }
     },
     handleEditZb(index, row) {
