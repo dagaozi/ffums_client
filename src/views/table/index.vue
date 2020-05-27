@@ -1,20 +1,29 @@
 <!--
  * @Description:
  * @Author: lxc
- * @Date: 2020-05-06 20:11:06
- * @LastEditTime: 2020-05-26 10:11:40
+ * @Date: 2020-05-18 08:47:24
+ * @LastEditTime: 2020-05-27 14:46:49
  * @LastEditors: lxc
 -->
 <template>
   <div class="app-container">
     <el-table
       v-loading="listLoading"
+      :row-class-name="getRowClassName"
       :data="list"
       element-loading-text="Loading"
       border
       fit
       highlight-current-row
     >
+      <el-table-column type="expand">
+        <template slot-scope="props">
+          <div>
+            <input-config :config-list="props.row.configList" />
+          </div>
+        </template>
+      </el-table-column>
+
       <el-table-column label="目录名称">
         <template slot-scope="scope">
           {{ scope.row.name }}
@@ -25,33 +34,77 @@
 </template>
 
 <script>
-// import { getAllConfig } from '@/api/itemconfig'
 import { getItemCategoryConfigByName } from '@/api/categoryconfig'
+import { getAllConfig } from '@/api/itemconfig'
+import InputConfig from '@/components/InputConfig'
 
 export default {
+  components: {
+    InputConfig
+  },
   data() {
     return {
-      list: null,
-      listLoading: false
+      list: [],
+      listLoading: false,
+      allConfigList: []
     }
   },
   created() {
-    this.getCategoryList()
-    this.fetchData()
+    this.getData()
   },
   methods: {
-    fetchData() {
-      // this.listLoading = true
-      // getAllConfig().then(res => {
-      //   this.listLoading = false
-      //   this.list = res.data
-      // })
+    getCategoryList() {},
+    getConfig() {
+      getAllConfig().then(res => {
+        if (res.data) {
+          this.allConfigList = res.data
+        }
+      })
     },
-    getCategoryList() {
+    getData() {
+      this.listLoading = true
       getItemCategoryConfigByName('实验室指标').then(res => {
         this.list = res.data
+        if (this.list.length > 0) {
+          getAllConfig().then(res => {
+            this.listLoading = false
+            if (res.data) {
+              this.allConfigList = res.data
+              this.handleData()
+            }
+          })
+        } else {
+          this.listLoading = false
+        }
       })
+    },
+    handleData() {
+      this.list.forEach((item, index) => {
+        console.log('handleData item name->', item.name)
+        const array = this._.filter(this.allConfigList, configItem => {
+          return configItem.categoryName === item.name
+        })
+        array.forEach(item => {
+          if (item.inputType === '2') {
+            item.selectList = item.typeOption.split('^')
+          }
+        })
+        this.list[index].configList = array
+      })
+      console.log('handleData end list->', this.list)
+    },
+    getRowClassName({ row, rowIndex }) {
+      console.log('getRowClassName row', row)
+      if (row.configList && row.configList.length === 0) {
+        return 'row-expand-cover'
+      }
     }
   }
 }
 </script>
+
+<style>
+.row-expand-cover .el-table__expand-icon {
+  visibility: hidden;
+}
+</style>

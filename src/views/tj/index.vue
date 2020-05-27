@@ -2,13 +2,14 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-18 08:47:24
- * @LastEditTime: 2020-05-27 11:04:12
+ * @LastEditTime: 2020-05-27 14:40:17
  * @LastEditors: lxc
 -->
 <template>
   <div class="app-container">
     <el-table
       v-loading="listLoading"
+      :row-class-name="getRowClassName"
       :data="list"
       element-loading-text="Loading"
       border
@@ -73,7 +74,7 @@ export default {
             }
           })
         } else {
-            this.listLoading = false
+          this.listLoading = false
         }
       })
     },
@@ -91,7 +92,19 @@ export default {
         this.list[index].configList = array
       })
       console.log('handleData end list->', this.list)
+    },
+    getRowClassName({ row, rowIndex }) {
+      console.log('getRowClassName row', row)
+      if (row.configList && row.configList.length === 0) {
+        return 'row-expand-cover'
+      }
     }
   }
 }
 </script>
+
+<style>
+.row-expand-cover .el-table__expand-icon {
+  visibility: hidden;
+}
+</style>
