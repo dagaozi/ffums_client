@@ -34,6 +34,12 @@ export const constantRoutes = [
         name: 'PatientInfo',
         component: () => import('@/views/patient/index'),
         meta: { title: '患者信息', icon: 'people' }
+      },
+      {
+        path: 'all',
+        name: 'PatientInfo',
+        component: () => import('@/views/all/index'),
+        meta: { title: '信息录入', icon: 'people' }
       }
     ]
   },

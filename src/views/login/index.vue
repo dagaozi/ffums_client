@@ -43,9 +43,7 @@
           @keyup.enter.native="handleLogin"
         />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon
-            :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'"
-          />
+          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
         </span>
       </el-form-item>
 
@@ -58,70 +56,70 @@
 
       <div class="tips">
         <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
+        <span>password: any</span>
       </div>
     </el-form>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
-import { login } from '@/api/user.js'
-import { setToken } from '@/utils/auth'
+import { validUsername } from "@/utils/validate";
+import { login } from "@/api/user.js";
+import { setToken } from "@/utils/auth";
 
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('请输入正确的用户名'))
+        callback(new Error("请输入正确的用户名"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('密码长度不能少于6位'))
+        callback(new Error("密码长度不能少于6位"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     return {
       loginForm: {
-        username: 'admin',
-        password: '123456'
+        username: "admin",
+        password: "123456"
       },
       loginRules: {
         username: [
-          { required: true, trigger: 'blur', validator: validateUsername }
+          { required: true, trigger: "blur", validator: validateUsername }
         ],
         password: [
-          { required: true, trigger: 'blur', validator: validatePassword }
+          { required: true, trigger: "blur", validator: validatePassword }
         ]
       },
       loading: false,
-      passwordType: 'password',
+      passwordType: "password",
       redirect: undefined
-    }
+    };
   },
   watch: {
     $route: {
       handler: function(route) {
-        this.redirect = route.query && route.query.redirect
+        this.redirect = route.query && route.query.redirect;
       },
       immediate: true
     }
   },
   methods: {
     showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
+      if (this.passwordType === "password") {
+        this.passwordType = "";
       } else {
-        this.passwordType = 'password'
+        this.passwordType = "password";
       }
       this.$nextTick(() => {
-        this.$refs.password.focus()
-      })
+        this.$refs.password.focus();
+      });
     },
     handleLogin() {
       // this.$refs.loginForm.validate(valid => {
@@ -138,12 +136,12 @@ export default {
       //     return false
       //   }
       // })
-      this.loading = true
-      login(101, this.loginForm.username, this.loginForm.password).then(
-        this._login
-      )
+      // this.loading = true
+      // login(101, this.loginForm.username, this.loginForm.password).then(
+      //   this._login
+      // )
 
-    /*   this.$store.commit("user/SET_TOKEN", "test");
+      this.$store.commit("user/SET_TOKEN", "test");
       this.$store.commit("user/SET_NAME", "lxc");
       this.$store.commit(
         "user/SET_AVATAR",
@@ -152,26 +150,26 @@ export default {
       setToken("test");
       const msg = this.redirect || "/";
       console.log("_login msg-> ", msg);
-      this.$router.push({ path: msg }); */
+      this.$router.push({ path: msg });
     },
     _login(res) {
-      console.log(res)
-      this.loading = false
+      console.log(res);
+      this.loading = false;
       if (res.data) {
-        this.$store.commit('user/SET_TOKEN', res.data)
-        this.$store.commit('user/SET_NAME', 'lxc')
+        this.$store.commit("user/SET_TOKEN", res.data);
+        this.$store.commit("user/SET_NAME", "lxc");
         this.$store.commit(
-          'user/SET_AVATAR',
-          'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
-        )
-        setToken(res.data)
-        const msg = this.redirect || '/'
-        console.log('_login msg-> ', msg)
-        this.$router.push({ path: msg })
+          "user/SET_AVATAR",
+          "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif"
+        );
+        setToken(res.data);
+        const msg = this.redirect || "/";
+        console.log("_login msg-> ", msg);
+        this.$router.push({ path: msg });
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
