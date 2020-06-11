@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-18 08:47:24
- * @LastEditTime: 2020-05-27 08:42:19
+ * @LastEditTime: 2020-06-11 09:48:20
  * @LastEditors: lxc
  */
 import request from '@/utils/request'
@@ -54,7 +54,7 @@ export function getItemCategoryConfigById(id) {
 
 export function getItemCategoryConfigByName(categoryName) {
   return request({
-    url: '/itemCategoryconfig/getByCategoryName',
+    url: '/itemCategoryconfig/getByName',
     method: 'get',
     params: { categoryName: categoryName }
   })

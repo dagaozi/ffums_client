@@ -30,70 +30,10 @@ export const constantRoutes = [
         meta: { title: '患者列表', icon: 'people' }
       },
       {
-        path: 'info',
-        name: 'PatientInfo',
-        component: () => import('@/views/patient/index'),
-        meta: { title: '患者信息', icon: 'people' }
-      },
-      {
         path: 'all',
         name: 'PatientInfo',
         component: () => import('@/views/all/index'),
         meta: { title: '信息录入', icon: 'people' }
-      }
-    ]
-  },
-  {
-    path: '/followup',
-    component: Layout,
-    redirect: '/followup/new',
-    meta: { title: '随访', icon: 'example' },
-    children: [
-      {
-        path: 'new',
-        name: 'NewFollowUp',
-        component: () => import('@/views/newfollowup/index'),
-        meta: { title: '新增随访', icon: 'example' }
-      },
-      {
-        path: 'hisory',
-        name: 'Followup',
-        component: () => import('@/views/followup/index'),
-        meta: { title: '随访记录', icon: 'example' }
-      }
-    ]
-  },
-
-  {
-    path: '/dataindex',
-    component: Layout,
-    redirect: '/dataindex/table',
-    name: 'Example',
-    meta: { title: '指标管理', icon: 'dataindex' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: '实验室指标', icon: 'table' }
-      },
-      {
-        path: 'tj',
-        name: 'tj',
-        component: () => import('@/views/tj/index'),
-        meta: { title: '特检指标', icon: 'tree' }
-      },
-      {
-        path: 'rt',
-        name: 'rt',
-        component: () => import('@/views/rt/index'),
-        meta: { title: '人体成分', icon: 'tree' }
-      },
-      {
-        path: 'qt',
-        name: 'qt',
-        component: () => import('@/views/qt/index'),
-        meta: { title: '其他信息', icon: 'tree' }
       }
     ]
   },

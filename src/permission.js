@@ -1,3 +1,10 @@
+/*
+ * @Description:
+ * @Author: lxc
+ * @Date: 2020-06-06 23:31:11
+ * @LastEditTime: 2020-06-11 15:33:08
+ * @LastEditors: lxc
+ */
 import router from './router'
 import store from './store'
 import { Message } from 'element-ui'
@@ -13,7 +20,7 @@ const whiteList = ['/login'] // no redirect whitelist
 router.beforeEach(async(to, from, next) => {
   // start progress bar
   NProgress.start()
-
+  console.log('beforeEach to->', to, ' from->', from)
   // set page title
   document.title = getPageTitle(to.meta.title)
 
@@ -25,6 +32,15 @@ router.beforeEach(async(to, from, next) => {
       // if is logged in, redirect to the home page
       next({ path: '/' })
       NProgress.done()
+    } else if (to.path === '/all') {
+      // next({ path: '/all' })
+      if (store.getters.patientinfo && store.getters.patientinfo.id) {
+        next()
+      } else {
+        next({ path: '/list' })
+        Message.error('请先选择患者再点击信息录入')
+        NProgress.done()
+      }
     } else {
       const hasGetUserInfo = store.getters.name
       if (hasGetUserInfo) {
@@ -33,7 +49,6 @@ router.beforeEach(async(to, from, next) => {
         try {
           // get user info
           await store.dispatch('user/getInfo')
-
           next()
         } catch (error) {
           // remove token and go to login page to re-login
