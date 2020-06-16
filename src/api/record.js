@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-06-06 23:31:11
- * @LastEditTime: 2020-06-15 21:37:36
+ * @LastEditTime: 2020-06-16 10:42:32
  * @LastEditors: lxc
  */
 import request from '@/utils/request'
@@ -27,10 +27,10 @@ export function findByFollowId(followId) {
  * @param {*} itemValue 选项配置（用特殊符号分割）
  * @param {*} opUserId 操作者ID
  */
-export function addOrUpdate(followId, itemId, itemValue, opUserId) {
+export function addOrUpdate(data) {
   return request({
     url: '/itemRecord/addOrUpdate',
     method: 'post',
-    data: { followId, itemId, itemValue, opUserId }
+    data
   })
 }

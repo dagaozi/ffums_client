@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-06 20:11:06
- * @LastEditTime: 2020-06-11 18:50:32
+ * @LastEditTime: 2020-06-16 11:10:52
  * @LastEditors: lxc
  -->
 <template>
@@ -62,7 +62,13 @@
         </div>
       </el-dialog>
       <div class="tip">当前选中的患者：{{ selectName }}</div>
-      <el-button v-show="selectName" type="danger" icon="el-icon-delete" circle @click="setCurrent()" />
+      <el-button
+        v-show="selectName"
+        type="danger"
+        icon="el-icon-delete"
+        circle
+        @click="setCurrent()"
+      />
     </div>
 
     <div class="search">
@@ -106,10 +112,7 @@
       <span>是否选中该患者</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button
-          type="primary"
-          @click="handleClickSelect"
-        >确 定</el-button>
+        <el-button type="primary" @click="handleClickSelect">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -180,6 +183,7 @@ export default {
     handleClickSelect() {
       this.setCurrent(this.clickRow)
       this.dialogVisible = false
+      this.$router.push({ path: '/all' })
     },
     handleAddPatient() {
       addPatient(this.form).then(this._addPatient)

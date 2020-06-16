@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-06-06 23:31:11
- * @LastEditTime: 2020-06-10 21:58:21
+ * @LastEditTime: 2020-06-16 10:31:16
  * @LastEditors: lxc
 -->
 <template>
@@ -15,15 +15,16 @@
       <el-select
         v-model="sfmc"
         placeholder="请选择随访名称"
+        no-data-text="暂无随访信息"
         class="select-view"
+        @change="handleChangeSelcetSf"
       >
-        <el-option label="第一次随访" value="第一次随访" />
-
-        <el-option label="第二次随访" value="第二次随访" />
-
-        <el-option label="第三次随访" value="第三次随访" />
-
-        <el-option label="第四次随访" value="第四次随访" />
+        <el-option
+          v-for="(item,index) in sfData"
+          :key="item.id"
+          :label="item.name"
+          :value="index"
+        />
       </el-select>
     </div>
 
@@ -48,6 +49,8 @@
 import PatInfo from '@/components/Patinfo/index.vue'
 import SfManage from '@/components/SfManage/index.vue'
 import ZbManage from '@/components/ZbManage/index.vue'
+import { EventBus } from '@/utils/eventBus'
+import { getByPatientId } from '@/api/followup.js'
 export default {
   name: 'All',
   components: {
@@ -57,13 +60,35 @@ export default {
   },
   data() {
     return {
-      sfmc: '第一次随访',
-      activeName: 'first'
+      sfmc: '',
+      activeName: 'first',
+      sfData: []
     }
+  },
+  created() {
+    EventBus.$on('sf-refresh', () => {
+      this.getSfList()
+    })
+    this.getSfList()
+  },
+  destroyed() {
+    EventBus.$off('sf-refresh')
   },
   methods: {
     handleClick(tab, event) {
       console.log(tab, event)
+    },
+    handleChangeSelcetSf(value) {
+      console.log('handleChangeSelcetSf value->', value)
+      EventBus.$emit('sf-select', this.sfData[value])
+    },
+    getSfList() {
+      getByPatientId(this.$store.state.patient.info.id).then(result => {
+        if (result.data) {
+          this.sfData = result.data
+          console.log('getSfList', this.sfData)
+        }
+      })
     }
   }
 }

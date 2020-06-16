@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-27 09:20:53
- * @LastEditTime: 2020-06-15 22:47:35
+ * @LastEditTime: 2020-06-16 10:38:11
  * @LastEditors: lxc
 -->
 <template>
@@ -13,7 +13,7 @@
         <template slot-scope="scope">
           <div v-if="scope.row.inputType === '1'" class="input-content">
             <el-input
-              v-model="scope.row.typeOption"
+              v-model="scope.row.itemValue"
               placeholder="请输入内容"
               class="input-view"
               @blur="inputBlur"

@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-06-08 22:05:39
- * @LastEditTime: 2020-06-12 09:44:15
+ * @LastEditTime: 2020-06-16 10:22:08
  * @LastEditors: lxc
 -->
 <template>
@@ -10,13 +10,13 @@
     <el-dialog title="编辑随访记录" :visible.sync="dialogFormVisible">
       <el-form ref="form" :model="form" :label-width="formLabelWidth">
         <el-form-item label="随访名称：" class="from-item" prop="name">
-          <el-select v-model="form.name" placeholder="请选择随访名称">
+          <!-- <el-select v-model="form.name" placeholder="请选择随访名称">
             <el-option label="第一次随访" value="第一次随访" />
             <el-option label="第二次随访" value="第二次随访" />
             <el-option label="第三次随访" value="第三次随访" />
             <el-option label="第四次随访" value="第四次随访" />
-          </el-select>
-        </el-form-item>
+          </el-select> -->
+          <el-input v-model="form.name" disabled="" /></el-form-item>
 
         <el-form-item label="随访形式：" class="from-item" prop="type">
           <el-select v-model="form.type" placeholder="请选择随访形式">
@@ -97,6 +97,8 @@ import {
   deleteFollowUp
 } from '@/api/followup.js'
 
+import { EventBus } from '@/utils/eventBus'
+
 export default {
   name: 'SfManage',
   data() {
@@ -131,6 +133,7 @@ export default {
         note: '',
         pathologicalNumber: ''
       }
+      this.form.name = this.getNewSfName()
       this.mAddNewClick = true
       this.dialogFormVisible = true
     },
@@ -151,6 +154,7 @@ export default {
           getByPatientId(this.$store.state.patient.info.id).then(
             this._getByPatientId
           )
+          EventBus.$emit('sf-refresh')
         }
       })
     },
@@ -198,7 +202,11 @@ export default {
         getByPatientId(this.$store.state.patient.info.id).then(
           this._getByPatientId
         )
+        EventBus.$emit('sf-refresh')
       }
+    },
+    getNewSfName() {
+        return '第' + (this.tableData.length + 1) + '次随访'
     }
   }
 }
