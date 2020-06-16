@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-18 08:47:24
- * @LastEditTime: 2020-06-11 09:48:20
+ * @LastEditTime: 2020-06-12 09:01:39
  * @LastEditors: lxc
  */
 import request from '@/utils/request'
@@ -52,18 +52,18 @@ export function getItemCategoryConfigById(id) {
   })
 }
 
-export function getItemCategoryConfigByName(categoryName) {
+export function getItemCategoryConfigByName(bigCategoryName) {
   return request({
-    url: '/itemCategoryconfig/getByName',
+    url: '/itemCategoryconfig/getCategory',
     method: 'get',
-    params: { categoryName: categoryName }
+    params: { bigCategoryName }
   })
 }
 
-export function deleteCategory(followId) {
+export function deleteCategory(id) {
   return request({
-    url: '/delete',
+    url: '/itemCategoryconfig/delete',
     method: 'post',
-    data: { followId: followId }
+    data: { id }
   })
 }

@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-18 08:47:24
- * @LastEditTime: 2020-05-20 10:49:21
+ * @LastEditTime: 2020-06-12 09:07:14
  * @LastEditors: lxc
  */
 import request from '@/utils/request'
@@ -17,7 +17,7 @@ import request from '@/utils/request'
  */
 export function addConfig(data) {
   return request({
-    url: '/itemconfig/add',
+    url: '/itemConfig/add',
     method: 'post',
     data
   })
@@ -33,7 +33,7 @@ export function addConfig(data) {
 
 export function updateConfig(data) {
   return request({
-    url: '/itemconfig/update',
+    url: '/itemConfig/update',
     method: 'post',
     data
   })
@@ -44,7 +44,15 @@ export function updateConfig(data) {
  */
 export function getAllConfig() {
   return request({
-    url: '/itemconfig/getAll',
+    url: '/itemConfig/getAll',
     method: 'get'
+  })
+}
+
+export function deleteConfig(id) {
+  return request({
+    url: '/itemConfig/delete',
+    method: 'post',
+    data: { id }
   })
 }

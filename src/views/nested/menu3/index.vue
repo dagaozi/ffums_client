@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-19 23:21:51
- * @LastEditTime: 2020-05-26 16:06:57
+ * @LastEditTime: 2020-06-15 21:47:25
  * @LastEditors: lxc
 -->
 <template>
@@ -108,24 +108,6 @@
               @click="handleDelete(scope.$index, scope.row)"
             >删除</el-button>
           </div>
-
-          <!-- <div v-show="scope.row.edit">
-
-                <el-button size="mini" @click="handleSave(scope.$index, scope.row)">保存</el-button>
-
-                <el-button
-
-                  v-show="scope.row.edit"
-
-                  size="mini"
-
-                  type="danger"
-
-                  @click="handleCancel(scope.$index, scope.row)"
-
-                >取消</el-button>
-
-              </div>-->
         </template>
       </el-table-column>
     </el-table>
@@ -133,7 +115,12 @@
 </template>
 
 <script>
-import { getAllConfig, addConfig, updateConfig } from '@/api/itemconfig.js'
+import {
+  getAllConfig,
+  addConfig,
+  updateConfig,
+  deleteConfig
+} from '@/api/itemconfig.js'
 
 export default {
   name: 'Menu3',
@@ -198,11 +185,14 @@ export default {
       for (let i = 0; i < split.length; i++) {
         this.form.singleArray.push({ value: split[i], key: i })
       }
-      // row.edit = true;
     },
     handleDelete(index, row) {
       console.log(index, row)
-      this.$message('删除')
+      deleteConfig(row.id).then(res => {
+        if (res.data) {
+          getAllConfig().then(this._getAllConfig)
+        }
+      })
     },
     newZb() {
       this.$message('新增指标')
@@ -252,26 +242,19 @@ export default {
     },
     handleClickDialogOk() {
       console.log('handleClickDialogOk', this.form)
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          const obj = {}
-          obj.categoryId = this.$store.state.category.selectCategory.categoryId
-          obj.categoryName = this.$store.state.category.selectCategory.name
-          obj.inputType = this.form.inputType
-          obj.typeOption = this.getSingleSelect()
-          obj.name = this.form.name
-          console.log('handleClickDialogOk obj->', obj)
-          if (this.mAddNew) {
-            addConfig(obj).then(this._addConfig)
-          } else {
-            obj.id = this.form.id
-            updateConfig(obj).then(this._updateConfig)
-          }
-        } else {
-          console.log('error submit!!')
-          return false
-        }
-      })
+      const obj = {}
+      obj.categoryId = this.$store.state.category.selectCategory.categoryId
+      obj.categoryName = this.$store.state.category.selectCategory.name
+      obj.inputType = this.form.inputType
+      obj.typeOption = this.getSingleSelect()
+      obj.name = this.form.name
+      console.log('handleClickDialogOk obj->', obj)
+      if (this.mAddNew) {
+        addConfig(obj).then(this._addConfig)
+      } else {
+        obj.id = this.form.id
+        updateConfig(obj).then(this._updateConfig)
+      }
     },
     _addConfig(res) {
       if (res.data) {

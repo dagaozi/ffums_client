@@ -1,3 +1,10 @@
+/*
+ * @Description:
+ * @Author: lxc
+ * @Date: 2020-06-06 23:31:11
+ * @LastEditTime: 2020-06-11 22:45:27
+ * @LastEditors: lxc
+ */
 import { login, logout, getInfo } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
@@ -5,7 +12,8 @@ import { resetRouter } from '@/router'
 const state = {
   token: getToken(),
   name: '',
-  avatar: ''
+  avatar: '',
+  level: ''
 }
 
 const mutations = {
@@ -17,6 +25,9 @@ const mutations = {
   },
   SET_AVATAR: (state, avatar) => {
     state.avatar = avatar
+  },
+  SET_LEVEL: (state, level) => {
+    state.level = level
   }
 }
 

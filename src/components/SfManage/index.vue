@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-06-08 22:05:39
- * @LastEditTime: 2020-06-11 15:09:21
+ * @LastEditTime: 2020-06-12 09:44:15
  * @LastEditors: lxc
 -->
 <template>
@@ -90,7 +90,12 @@
 </template>
 
 <script>
-import { addFollowUp, getByPatientId } from '@/api/followup.js'
+import {
+  addFollowUp,
+  getByPatientId,
+  updateFollowUp,
+  deleteFollowUp
+} from '@/api/followup.js'
 
 export default {
   name: 'SfManage',
@@ -118,17 +123,36 @@ export default {
   },
   methods: {
     addNewSf() {
+      this.form = {
+        patientId: this.$store.state.patient.info.id,
+        name: '',
+        dateTime: '',
+        type: '',
+        note: '',
+        pathologicalNumber: ''
+      }
       this.mAddNewClick = true
       this.dialogFormVisible = true
     },
     handleEdit(index, row) {
       console.log(index, row)
+      this.mAddNewClick = false
       this.dialogFormVisible = true
       this.form = this._.cloneDeep(row)
     },
     handleDelete(index, row) {
       console.log(index, row)
-      this.$message('删除')
+      deleteFollowUp(row.id).then(res => {
+        if (res.data) {
+          this.$message({
+            message: res.data.resultMsg,
+            type: 'success'
+          })
+          getByPatientId(this.$store.state.patient.info.id).then(
+            this._getByPatientId
+          )
+        }
+      })
     },
     _getByPatientId(res) {
       if (res.data) {
@@ -145,6 +169,21 @@ export default {
         addFollowUp(this.form).then(this._addFollowUp)
       } else {
         // 编辑
+        this.form.patientId = this.$store.state.patient.info.id
+        updateFollowUp(this.form).then(res => {
+          if (res.data) {
+            console.log(this.$refs.form)
+            this.$refs.form.resetFields()
+            this.$message({
+              message: res.data.resultMsg,
+              type: 'success'
+            })
+            this.dialogFormVisible = false
+            getByPatientId(this.$store.state.patient.info.id).then(
+              this._getByPatientId
+            )
+          }
+        })
       }
     },
     _addFollowUp(res) {
@@ -152,10 +191,13 @@ export default {
         console.log(this.$refs.form)
         this.$refs.form.resetFields()
         this.$message({
-          message: res.data,
+          message: res.data.resultMsg,
           type: 'success'
         })
         this.dialogFormVisible = false
+        getByPatientId(this.$store.state.patient.info.id).then(
+          this._getByPatientId
+        )
       }
     }
   }

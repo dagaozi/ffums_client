@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-06-06 23:31:11
- * @LastEditTime: 2020-06-11 15:36:13
+ * @LastEditTime: 2020-06-11 18:50:02
  * @LastEditors: lxc
 -->
 <template>
@@ -22,8 +22,8 @@
       </el-form-item>
       <el-form-item label="性别：" class="from-item">
         <el-select v-model="form.gender" placeholder="请选择性别">
-          <el-option label="男" value="1" />
-          <el-option label="女" value="2" />
+          <el-option label="男" value="男" />
+          <el-option label="女" value="女" />
         </el-select>
       </el-form-item>
       <el-form-item label="归属：" class="from-item">
