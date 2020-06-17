@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-06 20:11:06
- * @LastEditTime: 2020-06-17 21:09:03
+ * @LastEditTime: 2020-06-17 21:11:31
  * @LastEditors: lxc
  -->
 <template>
@@ -65,7 +65,7 @@
       <el-button
         v-show="selectName"
         type="danger"
-        icon="el-icon-delete"
+        icon="el-icon-close"
         circle
         @click="setCurrent()"
       />
