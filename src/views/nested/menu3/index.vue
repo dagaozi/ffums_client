@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-19 23:21:51
- * @LastEditTime: 2020-06-15 21:47:25
+ * @LastEditTime: 2020-06-17 20:01:33
  * @LastEditors: lxc
 -->
 <template>
@@ -257,7 +257,7 @@ export default {
       }
     },
     _addConfig(res) {
-      if (res.data) {
+      if (res.ok) {
         this.dialogFormVisible = false
         this.$message({
           message: res.data,
@@ -265,6 +265,11 @@ export default {
         })
         this.resetForm()
         getAllConfig().then(this._getAllConfig)
+      } else {
+         this.$message({
+          message: res.msg,
+          type: 'error'
+        })
       }
     },
     _updateConfig(res) {

@@ -2,11 +2,11 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-06 20:11:06
- * @LastEditTime: 2020-06-17 19:54:21
+ * @LastEditTime: 2020-06-17 20:02:08
  * @LastEditors: lxc
  */
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '@/store'
 import { isEmpty } from './ToolUtil'
 
@@ -57,11 +57,6 @@ service.interceptors.response.use(
     if (hasError === 0) {
       return { ok: true, data }
     } else if (!isEmpty(hasError)) {
-      Message({
-        message: errorMessage,
-        type: 'error',
-        duration: 5 * 1000
-      })
       return { ok: false, msg: errorMessage }
     } else {
       return res

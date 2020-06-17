@@ -244,7 +244,7 @@ export default {
           this.getData()
         }
       })
-     // this.$message('删除')
+      // this.$message('删除')
     },
     newZb() {
       this.$message('新增指标')
@@ -283,14 +283,19 @@ export default {
       } else {
         this.form.categoryId = this.getCateGoryIdByName()
         updateItemCategoryConfig(this.form).then(res => {
-          if (res.data) {
+          if (res.ok) {
             this.dialogFormVisible = false
             this.$refs.form.resetFields()
             this.$message({
-              message: res.data,
+              message: res.data.resultMsg,
               type: 'success'
             })
             this.getData()
+          } else {
+            this.$message({
+              message: res.msg,
+              type: 'error'
+            })
           }
         })
       }
@@ -307,14 +312,19 @@ export default {
       }
     },
     _addItemCategoryConfig(res) {
-      if (res.data) {
+      if (res.ok) {
         this.dialogFormVisible = false
         this.$refs.form.resetFields()
         this.$message({
-          message: res.data,
+          message: res.data.resultMsg,
           type: 'success'
         })
         this.getData()
+      } else {
+        this.$message({
+          message: res.msg,
+          type: 'error'
+        })
       }
     },
     handleEditZb(index, row) {
