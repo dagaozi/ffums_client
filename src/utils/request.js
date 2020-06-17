@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-06 20:11:06
- * @LastEditTime: 2020-06-17 15:59:08
+ * @LastEditTime: 2020-06-17 19:27:00
  * @LastEditors: lxc
  */
 import axios from 'axios'
@@ -52,42 +52,14 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
-    console.log('response res->', res)
     // if the custom code is not 20000, it is judged as an error.
-    if (res.hasError !== 0) {
-      Message({
-        message: res.errorMessage || 'Error',
-        type: 'error',
-        duration: 5 * 1000
-      })
-
-      // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        // to re-login
-        MessageBox.confirm(
-          'You have been logged out, you can cancel to stay on this page, or log in again',
-          'Confirm logout',
-          {
-            confirmButtonText: 'Re-Login',
-            cancelButtonText: 'Cancel',
-            type: 'warning'
-          }
-        ).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
-          })
-        })
-      }
-      return Promise.reject(new Error(res.message || 'Error'))
+    const { hasError, errorMessage, data } = res
+    if (hasError === 0) {
+      return { ok: true, data }
+    } else if (!isEmpty(hasError)) {
+      return { ok: false, msg: errorMessage }
     } else {
-      const { hasError, errorMessage, data } = res
-      if (hasError === 0) {
-        return { ok: true, data }
-      } else if (!isEmpty(hasError)) {
-          return { ok: false, msg: errorMessage }
-        } else {
-          return res
-        }
+      return res
     }
   },
   error => {

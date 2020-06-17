@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-06-08 22:28:23
- * @LastEditTime: 2020-06-17 19:17:00
+ * @LastEditTime: 2020-06-17 19:24:25
  * @LastEditors: lxc
 -->
 <template>
@@ -220,14 +220,16 @@ export default {
             const recodeList = recordRes.data
             const configList = configRes.data
             const categoryList = CategoryRes.data
-            recodeList.forEach(recodeItem => {
-              configList.some(configItem => {
-                if (configItem.id === recodeItem.itemId) {
-                  configItem.itemValue = recodeItem.itemValue
-                  return true
-                }
+            if (!isEmpty(recodeList)) {
+              recodeList.forEach(recodeItem => {
+                configList.some(configItem => {
+                  if (configItem.id === recodeItem.itemId) {
+                    configItem.itemValue = recodeItem.itemValue
+                    return true
+                  }
+                })
               })
-            })
+            }
             vm.list = categoryList
             categoryList.forEach((item, index) => {
               const array = vm._.filter(configList, configItem => {
