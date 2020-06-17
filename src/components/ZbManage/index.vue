@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-06-08 22:28:23
- * @LastEditTime: 2020-06-17 19:24:25
+ * @LastEditTime: 2020-06-17 19:52:07
  * @LastEditors: lxc
 -->
 <template>
@@ -12,7 +12,7 @@
         v-model="activeName"
         tab-position="left"
         type="border-card"
-        style="height: 400px;"
+        style="height: 100%"
         @tab-click="handleTabClick"
       >
         <el-tab-pane label="实验室指标" name="实验室指标">
