@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-18 08:47:24
- * @LastEditTime: 2020-05-18 14:56:40
+ * @LastEditTime: 2020-06-17 21:07:24
  * @LastEditors: lxc
  */
 import request from '@/utils/request'
@@ -57,6 +57,14 @@ export function updatePatient(data) {
   })
 }
 
+export function deletePatient(id) {
+  return request({
+    url: '/patient/delete',
+    method: 'post',
+    data: { id }
+  })
+}
+
 /**
  * 获取患者
  * @param {*} id
@@ -78,4 +86,3 @@ export function getPatientList() {
     method: 'get'
   })
 }
-

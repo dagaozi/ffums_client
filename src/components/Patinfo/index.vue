@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-06-06 23:31:11
- * @LastEditTime: 2020-06-11 18:50:02
+ * @LastEditTime: 2020-06-17 20:39:08
  * @LastEditors: lxc
 -->
 <template>
@@ -47,7 +47,7 @@
       <el-form-item label="电话2：" class="from-item">
         <el-input v-model="form.phone2" />
       </el-form-item>
-      <el-form-item label="地址：">
+      <el-form-item label="地址：" class="form-item-address">
         <el-input
           v-model="form.address"
           type="textarea"
@@ -140,5 +140,7 @@ export default {
 
 .el-form-item {
   margin: 2px;
+  width: 30%;
 }
+
 </style>

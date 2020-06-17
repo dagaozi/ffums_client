@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-06 20:11:06
- * @LastEditTime: 2020-06-17 14:34:56
+ * @LastEditTime: 2020-06-17 21:09:03
  * @LastEditors: lxc
  -->
 <template>
@@ -106,6 +106,15 @@
       <el-table-column property="id" label="病人ID" />
       <el-table-column property="mzId" label="住院号" />
       <el-table-column property="inPatientId" label="病理号" />
+      <el-table-column label="操作">
+        <template slot-scope="scope">
+          <el-button
+            size="mini"
+            type="danger"
+            @click="handleDelete(scope.$index, scope.row)"
+          >删除</el-button>
+        </template>
+      </el-table-column>
     </el-table>
 
     <el-dialog title="选择患者" :visible.sync="dialogVisible" width="30%">
@@ -120,7 +129,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { addPatient, getPatientList } from '@/api/patient.js'
+import { addPatient, getPatientList, deletePatient } from '@/api/patient.js'
 
 export default {
   name: 'PatientList',
@@ -173,9 +182,11 @@ export default {
       this.$store.commit('patient/setInfo', row)
     },
     handleRowClick(row, column, event) {
-      console.log('handleRowClick row', row)
-      this.clickRow = row
-      this.dialogVisible = true
+      console.log('handleRowClick row', row, 'column', column)
+      if (column.label !== '操作') {
+        this.clickRow = row
+        this.dialogVisible = true
+      }
     },
     handleCurrentChange(val) {
       this.currentRow = val
@@ -251,6 +262,19 @@ export default {
           .toLowerCase()
           .includes(this.searchContent.toLowerCase())
       }
+    },
+    handleDelete(index, row) {
+      console.log(' handleDelete index', index, 'row ', row)
+      deletePatient(row.id).then(res => {
+        if (res.ok) {
+          getPatientList().then(this._getPatientList)
+        } else {
+          this.$message({
+            message: res.msg,
+            type: 'error'
+          })
+        }
+      })
     }
   }
 }
