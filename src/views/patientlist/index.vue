@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-06 20:11:06
- * @LastEditTime: 2020-06-16 11:10:52
+ * @LastEditTime: 2020-06-17 14:34:56
  * @LastEditors: lxc
  -->
 <template>
@@ -192,7 +192,7 @@ export default {
       if (res.data) {
         this.dialogFormVisible = false
         this.$message({
-          message: res.data,
+          message: res.data.resultMsg,
           type: 'success'
         })
         this.form = {

@@ -88,13 +88,11 @@ export default {
     }
     return {
       loginForm: {
-        username: 'admin',
+        username: 'dagaozi',
         password: '123456'
       },
       loginRules: {
-        username: [
-          { required: true, trigger: 'blur', validator: validateUsername }
-        ],
+        username: [{ required: true, trigger: 'blur' }],
         password: [
           { required: true, trigger: 'blur', validator: validatePassword }
         ]
@@ -124,49 +122,39 @@ export default {
       })
     },
     handleLogin() {
-      // this.$refs.loginForm.validate(valid => {
-      //   if (valid) {
-      //     this.loading = true
-      //     this.$store.dispatch('user/login', this.loginForm).then(() => {
-      //       this.$router.push({ path: this.redirect || '/' })
-      //       this.loading = false
-      //     }).catch(() => {
-      //       this.loading = false
-      //     })
-      //   } else {
-      //     console.log('error submit!!')
-      //     return false
-      //   }
-      // })
-      // this.loading = true
-      // login(101, this.loginForm.username, this.loginForm.password).then(
-      //   this._login
-      // )
-
-      this.$store.commit('user/SET_TOKEN', 'test')
-      this.$store.commit('user/SET_NAME', 'lxc')
-      this.$store.commit(
-        'user/SET_AVATAR',
-        'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+      this.loading = true
+      login(this.loginForm.username, this.loginForm.password).then(
+        this._login,
+        error => {
+          console.log('handleLogin error->', error)
+          this.loading = false
+        }
       )
-      setToken('test')
-      const msg = this.redirect || '/'
-      console.log('_login msg-> ', msg)
-      this.$router.push({ path: msg })
+
+      // this.$store.commit('user/SET_TOKEN', 'test')
+      // this.$store.commit('user/SET_NAME', 'lxc')
+      // this.$store.commit(
+      //   'user/SET_AVATAR',
+      //   'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
+      // )
+      // setToken('test')
+      // const msg = this.redirect || '/'
+      // console.log('_login msg-> ', msg)
+      // this.$router.push({ path: msg })
     },
     _login(res) {
-      console.log(res)
+      console.log('_login', res)
       this.loading = false
-      if (res.data) {
-        this.$store.commit('user/SET_TOKEN', res.data)
+      if (res.ok) {
+        this.$store.commit('user/SET_TOKEN', res.data.token)
         this.$store.commit('user/SET_NAME', 'lxc')
+        this.$store.commit('user/SET_LEVEL', res.data.grade)
         this.$store.commit(
           'user/SET_AVATAR',
           'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif'
         )
-        setToken(res.data)
+        setToken(res.data.token)
         const msg = this.redirect || '/'
-        console.log('_login msg-> ', msg)
         this.$router.push({ path: msg })
       }
     }

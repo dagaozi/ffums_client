@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-06-08 22:28:23
- * @LastEditTime: 2020-06-16 10:56:20
+ * @LastEditTime: 2020-06-17 16:05:55
  * @LastEditors: lxc
 -->
 <template>
@@ -237,10 +237,8 @@ export default {
             const data = {
               followId: vm.sfInfo.id,
               itemId: sonItem.id,
-              itemValue: isEmpty(sonItem.itemValue) ? '' : sonItem.itemValue,
-              opUserId: 'test'
+              itemValue: isEmpty(sonItem.itemValue) ? '' : sonItem.itemValue
             }
-            console.log('data', data)
             addOrUpdate(data).then(res => {})
           }
         })

@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-06 20:11:06
- * @LastEditTime: 2020-05-19 20:37:36
+ * @LastEditTime: 2020-06-17 15:13:29
  * @LastEditors: lxc
  */
 import request from '@/utils/request'
@@ -28,11 +28,11 @@ export function logout() {
  * @param {*} account 用户名
  * @param {*} password 密码
  */
-export function login(type, account, password) {
+export function login(account, password) {
   return request({
     url: '/user/login',
     method: 'post',
-    data: { type, account, password }
+    params: { account, password }
   })
 }
 
@@ -62,4 +62,3 @@ export function register(data) {
     data
   })
 }
-

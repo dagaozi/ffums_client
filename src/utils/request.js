@@ -2,13 +2,13 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-06 20:11:06
- * @LastEditTime: 2020-05-22 15:00:01
+ * @LastEditTime: 2020-06-17 15:59:08
  * @LastEditors: lxc
  */
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
-import { getToken } from '@/utils/auth'
+import { isEmpty } from './ToolUtil'
 
 // create an axios instance
 const service = axios.create({
@@ -26,7 +26,7 @@ service.interceptors.request.use(
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
-      config.headers['X-Token'] = getToken()
+      config.headers.TOKEN = store.getters.token
     }
     config.headers['Content-Type'] = 'application/json'
     return config
@@ -80,7 +80,14 @@ service.interceptors.response.use(
       }
       return Promise.reject(new Error(res.message || 'Error'))
     } else {
-      return res
+      const { hasError, errorMessage, data } = res
+      if (hasError === 0) {
+        return { ok: true, data }
+      } else if (!isEmpty(hasError)) {
+          return { ok: false, msg: errorMessage }
+        } else {
+          return res
+        }
     }
   },
   error => {

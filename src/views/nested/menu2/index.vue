@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-06 20:11:06
- * @LastEditTime: 2020-05-19 20:47:39
+ * @LastEditTime: 2020-06-17 15:04:02
  * @LastEditors: lxc
  -->
 <template>
@@ -14,8 +14,8 @@
     >新增用户</el-button>
     <el-dialog title="新增用户" :visible.sync="dialogFormVisible">
       <el-form ref="form" :model="form">
-        <el-form-item label="账号" :label-width="formLabelWidth" prop="name">
-          <el-input v-model="form.name" autocomplete="off" />
+        <el-form-item label="账号" :label-width="formLabelWidth" prop="account">
+          <el-input v-model="form.account" autocomplete="off" />
         </el-form-item>
         <el-form-item
           label="密码1"
@@ -59,7 +59,7 @@ export default {
     return {
       dialogFormVisible: false,
       form: {
-        name: '',
+        account: '',
         password1: '',
         password2: '',
         grade: ''
