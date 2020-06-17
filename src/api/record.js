@@ -2,10 +2,11 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-06-06 23:31:11
- * @LastEditTime: 2020-06-16 10:42:32
+ * @LastEditTime: 2020-06-17 18:46:38
  * @LastEditors: lxc
  */
 import request from '@/utils/request'
+import axios from 'axios'
 
 /**
  * 根据随访id获取指标信息
@@ -16,7 +17,7 @@ export function findByFollowId(followId) {
   return request({
     url: '/itemRecord/getByFollowId',
     method: 'post',
-    data: { followId }
+    params: { followId }
   })
 }
 
@@ -33,4 +34,26 @@ export function addOrUpdate(data) {
     method: 'post',
     data
   })
+}
+
+export function getRecordData(followId) {
+  axios
+    .all([
+      request({
+        url: '/itemRecord/getByFollowId',
+        method: 'post',
+        params: { followId }
+      }),
+      request({
+        url: '/itemConfig/getAll',
+        method: 'get'
+      })
+    ])
+    .then(
+      axios.spread(function(recordRes, configRes) {
+        console.log('configRes', configRes)
+        console.log('recordRes', recordRes)
+        return { ok: true, data: '测试' }
+      })
+    )
 }

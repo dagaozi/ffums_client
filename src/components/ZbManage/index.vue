@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-06-08 22:28:23
- * @LastEditTime: 2020-06-17 16:05:55
+ * @LastEditTime: 2020-06-17 19:17:00
  * @LastEditors: lxc
 -->
 <template>
@@ -147,11 +147,12 @@
 
 <script>
 import { getItemCategoryConfigByName } from '@/api/categoryconfig'
-import { getAllConfig } from '@/api/itemconfig'
 import InputConfig from '@/components/InputConfig'
-import { addOrUpdate } from '@/api/record'
+import { addOrUpdate, findByFollowId } from '@/api/record'
+import axios from 'axios'
 import { EventBus } from '@/utils/eventBus'
 import { isEmpty } from '@/utils/ToolUtil.js'
+import { getAllConfig } from '@/api/itemconfig'
 export default {
   name: 'ZbManage',
   components: {
@@ -161,7 +162,6 @@ export default {
     return {
       list: [],
       listLoading: false,
-      allConfigList: [],
       activeName: '实验室指标',
       sfInfo: null
     }
@@ -170,56 +170,17 @@ export default {
     EventBus.$on('sf-select', value => {
       console.log('随访选择 value->', value)
       this.sfInfo = value
+      this.getAll()
     })
-    this.getData()
+    // this.getData()
   },
   destroyed() {
     EventBus.$off('sf-select')
   },
   methods: {
-    getCategoryList() {},
-    getConfig() {
-      getAllConfig().then(res => {
-        if (res.data) {
-          this.allConfigList = res.data
-        }
-      })
-    },
-    getData() {
-      this.listLoading = true
-      getItemCategoryConfigByName(this.activeName).then(res => {
-        this.list = res.data
-        if (this.list.length > 0) {
-          getAllConfig().then(res => {
-            this.listLoading = false
-            if (res.data) {
-              this.allConfigList = res.data
-              this.handleData()
-            }
-          })
-        } else {
-          this.listLoading = false
-        }
-      })
-    },
     handleTabClick(tab, event) {
       console.log('handleTabClick')
-      this.getData()
-    },
-    handleData() {
-      this.list.forEach((item, index) => {
-        console.log('handleData item name->', item.name)
-        const array = this._.filter(this.allConfigList, configItem => {
-          return configItem.categoryName === item.name
-        })
-        array.forEach(item => {
-          if (item.inputType === '2') {
-            item.selectList = item.typeOption.split('^')
-          }
-        })
-        this.list[index].configList = array
-      })
-      console.log('handleData end list->', this.list)
+      this.getAll()
     },
     getRowClassName({ row, rowIndex }) {
       console.log('getRowClassName row', row)
@@ -243,6 +204,44 @@ export default {
           }
         })
       })
+    },
+    getAll() {
+      this.listLoading = true
+      const vm = this
+      axios
+        .all([
+          getItemCategoryConfigByName(this.activeName),
+          getAllConfig(),
+          findByFollowId(this.sfInfo.id)
+        ])
+        .then(
+          axios.spread(function(CategoryRes, configRes, recordRes) {
+            vm.listLoading = false
+            const recodeList = recordRes.data
+            const configList = configRes.data
+            const categoryList = CategoryRes.data
+            recodeList.forEach(recodeItem => {
+              configList.some(configItem => {
+                if (configItem.id === recodeItem.itemId) {
+                  configItem.itemValue = recodeItem.itemValue
+                  return true
+                }
+              })
+            })
+            vm.list = categoryList
+            categoryList.forEach((item, index) => {
+              const array = vm._.filter(configList, configItem => {
+                return configItem.categoryName === item.name
+              })
+              array.forEach(item => {
+                if (item.inputType === '2') {
+                  item.selectList = item.typeOption.split('^')
+                }
+              })
+              vm.list[index].configList = array
+            })
+          })
+        )
     }
   }
 }
