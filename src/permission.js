@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-06-06 23:31:11
- * @LastEditTime: 2020-06-11 19:28:49
+ * @LastEditTime: 2020-06-17 16:12:50
  * @LastEditors: lxc
  */
 import router from './router'
@@ -39,6 +39,18 @@ router.beforeEach(async(to, from, next) => {
       } else {
         next({ path: '/list' })
         Message.error('请先选择患者再点击信息录入')
+        NProgress.done()
+      }
+    } else if (
+      to.path === '/nested/menu1' ||
+      to.path === '/nested/menu2' ||
+      to.path === '/nested/menu3'
+    ) {
+      if (store.getters.level && store.getters.level === 9) {
+        next()
+      } else {
+        next({ path: '/list' })
+        Message.error('你暂无权限')
         NProgress.done()
       }
     } else {

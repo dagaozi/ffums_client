@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-06 20:11:06
- * @LastEditTime: 2020-06-17 15:04:02
+ * @LastEditTime: 2020-06-17 16:26:04
  * @LastEditors: lxc
  -->
 <template>
@@ -20,9 +20,9 @@
         <el-form-item
           label="密码1"
           :label-width="formLabelWidth"
-          prop="password1"
+          prop="password"
         >
-          <el-input v-model="form.password1" autocomplete="off" />
+          <el-input v-model="form.password" autocomplete="off" />
         </el-form-item>
         <el-form-item
           label="密码2"
@@ -60,7 +60,7 @@ export default {
       dialogFormVisible: false,
       form: {
         account: '',
-        password1: '',
+        password: '',
         password2: '',
         grade: ''
       },
@@ -73,13 +73,15 @@ export default {
       this.dialogFormVisible = false
     },
     handleOkClick() {
-      register(this.form).then(this._register)
+      register(this.form.account, this.form.password, this.form.grade).then(
+        this._register
+      )
     },
     _register(res) {
-      if (res.data) {
+      if (res.ok) {
         this.dialogFormVisible = false
         this.$message({
-          message: res.data,
+          message: res.data.resultMsg,
           type: 'success'
         })
         this.$refs.form.resetFields()
