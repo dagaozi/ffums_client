@@ -240,8 +240,17 @@ export default {
     handleDelete(index, row) {
       console.log(index, row)
       deleteCategory(row.id).then(res => {
-        if (res.data) {
+        if (res.ok) {
+          this.$message({
+            message: res.msg,
+            type: 'success'
+          })
           this.getData()
+        } else {
+          this.$message({
+            message: res.msg,
+            type: 'error'
+          })
         }
       })
       // this.$message('删除')
@@ -287,7 +296,7 @@ export default {
             this.dialogFormVisible = false
             this.$refs.form.resetFields()
             this.$message({
-              message: res.data.resultMsg,
+              message: res.msg,
               type: 'success'
             })
             this.getData()

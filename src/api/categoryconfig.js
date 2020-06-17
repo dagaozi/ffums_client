@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-18 08:47:24
- * @LastEditTime: 2020-06-12 09:01:39
+ * @LastEditTime: 2020-06-17 21:44:47
  * @LastEditors: lxc
  */
 import request from '@/utils/request'
@@ -64,6 +64,6 @@ export function deleteCategory(id) {
   return request({
     url: '/itemCategoryconfig/delete',
     method: 'post',
-    data: { id }
+    params: { id }
   })
 }

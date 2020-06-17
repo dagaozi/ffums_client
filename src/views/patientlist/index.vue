@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-06 20:11:06
- * @LastEditTime: 2020-06-17 21:11:31
+ * @LastEditTime: 2020-06-17 21:42:21
  * @LastEditors: lxc
  -->
 <template>
@@ -264,10 +264,15 @@ export default {
       }
     },
     handleDelete(index, row) {
+      const vm = this
       console.log(' handleDelete index', index, 'row ', row)
       deletePatient(row.id).then(res => {
         if (res.ok) {
-          getPatientList().then(this._getPatientList)
+          vm.$message({
+            message: res.msg,
+            type: 'success'
+          })
+          getPatientList().then(vm._getPatientList)
         } else {
           this.$message({
             message: res.msg,

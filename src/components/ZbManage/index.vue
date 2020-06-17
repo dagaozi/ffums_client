@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-06-08 22:28:23
- * @LastEditTime: 2020-06-17 20:23:01
+ * @LastEditTime: 2020-06-17 21:53:09
  * @LastEditors: lxc
 -->
 <template>
@@ -204,7 +204,15 @@ export default {
               itemId: sonItem.id,
               itemValue: isEmpty(sonItem.itemValue) ? '' : sonItem.itemValue
             }
-            addOrUpdate(data).then(res => {})
+            addOrUpdate(data).then(res => {
+              if (!res.ok) {
+                this.$message({
+                  message: res.msg,
+                  type: 'error'
+                })
+                return false
+              }
+            })
           }
         })
       })

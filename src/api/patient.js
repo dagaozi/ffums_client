@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-18 08:47:24
- * @LastEditTime: 2020-06-17 21:07:24
+ * @LastEditTime: 2020-06-17 21:33:28
  * @LastEditors: lxc
  */
 import request from '@/utils/request'
@@ -61,7 +61,7 @@ export function deletePatient(id) {
   return request({
     url: '/patient/delete',
     method: 'post',
-    data: { id }
+    params: { id }
   })
 }
 

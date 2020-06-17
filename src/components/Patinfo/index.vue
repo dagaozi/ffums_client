@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-06-06 23:31:11
- * @LastEditTime: 2020-06-17 20:39:08
+ * @LastEditTime: 2020-06-17 21:59:43
  * @LastEditors: lxc
 -->
 <template>
@@ -136,11 +136,10 @@ export default {
   .btn{
     margin 10px
   }
-}
 
-.el-form-item {
+  .el-form-item {
   margin: 2px;
   width: 30%;
 }
-
+}
 </style>

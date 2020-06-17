@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-05-06 20:11:06
- * @LastEditTime: 2020-06-17 20:02:08
+ * @LastEditTime: 2020-06-17 21:39:13
  * @LastEditors: lxc
  */
 import axios from 'axios'
@@ -55,7 +55,7 @@ service.interceptors.response.use(
     // if the custom code is not 20000, it is judged as an error.
     const { hasError, errorMessage, data } = res
     if (hasError === 0) {
-      return { ok: true, data }
+      return { ok: true, data, msg: errorMessage }
     } else if (!isEmpty(hasError)) {
       return { ok: false, msg: errorMessage }
     } else {

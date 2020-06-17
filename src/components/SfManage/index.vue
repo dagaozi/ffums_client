@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-06-08 22:05:39
- * @LastEditTime: 2020-06-16 11:13:07
+ * @LastEditTime: 2020-06-17 22:06:28
  * @LastEditors: lxc
 -->
 <template>
@@ -16,7 +16,9 @@
             <el-option label="第三次随访" value="第三次随访" />
             <el-option label="第四次随访" value="第四次随访" />
           </el-select> -->
-          <el-input v-model="form.name" /></el-form-item>
+          <el-input
+            v-model="form.name"
+          /></el-form-item>
 
         <el-form-item label="随访形式：" class="from-item" prop="type">
           <el-select v-model="form.type" placeholder="请选择随访形式">
@@ -62,7 +64,11 @@
     >
       <el-table-column property="name" label="随访名称" />
 
-      <el-table-column property="dateTime" label="随访时间" />
+      <el-table-column
+        property="dateTime"
+        label="随访时间"
+        :formatter="formatter"
+      />
 
       <el-table-column property="type" label="随访形式" />
 
@@ -146,9 +152,9 @@ export default {
     handleDelete(index, row) {
       console.log(index, row)
       deleteFollowUp(row.id).then(res => {
-        if (res.data) {
+        if (res.ok) {
           this.$message({
-            message: res.data.resultMsg,
+            message: res.msg,
             type: 'success'
           })
           getByPatientId(this.$store.state.patient.info.id).then(
@@ -175,11 +181,11 @@ export default {
         // 编辑
         this.form.patientId = this.$store.state.patient.info.id
         updateFollowUp(this.form).then(res => {
-          if (res.data) {
+          if (res.ok) {
             console.log(this.$refs.form)
             this.$refs.form.resetFields()
             this.$message({
-              message: res.data.resultMsg,
+              message: res.msg,
               type: 'success'
             })
             this.dialogFormVisible = false
@@ -191,11 +197,11 @@ export default {
       }
     },
     _addFollowUp(res) {
-      if (res.data) {
+      if (res.ok) {
         console.log(this.$refs.form)
         this.$refs.form.resetFields()
         this.$message({
-          message: res.data.resultMsg,
+          message: res.resultMsg,
           type: 'success'
         })
         this.dialogFormVisible = false
@@ -206,10 +212,19 @@ export default {
       }
     },
     getNewSfName() {
-        return '第' + (this.tableData.length + 1) + '次随访'
+      return '第' + (this.tableData.length + 1) + '次随访'
+    },
+    formatter(row, column) {
+      if (row.dateTime) {
+        var arr1 = row.dateTime.split(' ')
+        return arr1[0]
+      } else {
+        return row.dateTime
+      }
     }
   }
 }
 </script>
 
-<style></style>
+<style >
+</style>
