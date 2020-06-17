@@ -2,7 +2,7 @@
  * @Description:
  * @Author: lxc
  * @Date: 2020-06-08 22:28:23
- * @LastEditTime: 2020-06-17 19:52:07
+ * @LastEditTime: 2020-06-17 20:23:01
  * @LastEditors: lxc
 -->
 <template>
@@ -29,7 +29,8 @@
             element-loading-text="Loading"
             border
             fit
-            highlight-current-row
+            highlight-current-
+            :row-style="RowClass"
           >
             <el-table-column type="expand">
               <template slot-scope="props">
@@ -61,6 +62,7 @@
             border
             fit
             highlight-current-row
+            :row-style="RowClass"
           >
             <el-table-column type="expand">
               <template slot-scope="props">
@@ -92,6 +94,7 @@
             border
             fit
             highlight-current-row
+            :row-style="RowClass"
           >
             <el-table-column type="expand">
               <template slot-scope="props">
@@ -123,6 +126,7 @@
             border
             fit
             highlight-current-row
+            :row-style="RowClass"
           >
             <el-table-column type="expand">
               <template slot-scope="props">
@@ -244,6 +248,10 @@ export default {
             })
           })
         )
+    },
+    RowClass({ row, column, rowIndex, columnIndex }) {
+      // 表头的背景颜色
+      return 'background:#f5f7fa'
     }
   }
 }
